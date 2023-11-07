@@ -1,0 +1,94 @@
+<%- include('../layout/top') %>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col-md-5 col-sm-12">
+                        <img src="/uploads/<%= book.image %>" alt="<%= book.title %>" class="img-fluid rounded-start" style="width: 100%;">
+                    </div>
+                    <div class="col-md-7 col-sm-12">
+                        <div class="card-body">
+                            <h1 class="card-title">
+                                <%= book.title %>
+                            </h1>
+                            <p class="lead">
+                                <%= book.description %>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="me-1">Muallif:</span>
+                                <a href="/authors/<%= author.id %>">
+                                    <%= author.name %>
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <span class="me-1">Turkum:</span>
+                                <a href="/?category=<%= category.id %>">
+                                    <%= category.name %>
+                                </a>
+                            </li>
+                            <li class="list-group-item"><span class="me-1">Narxi:</span>
+                                <%= book.price %>
+                            </li>
+                            <li class="list-group-item">
+                                <span class="me-1">Muqovasi:</span>
+                                <%= book.cover==='soft' ? 'Yumshoq' : 'Qattiq' %>
+                            </li>
+                            <li class="list-group-item">
+                                <span class="me-1">Mavjud:</span>
+                                <%= book.copies %>
+                            </li>
+                        </ul>
+                        <div class="card-body d-flex justify-content-between">
+                            <a class="btn btn-success mt-auto" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Buyurtma berish</a>
+                            <% if (adminId) { %>
+                                <div>
+                                    <a href="/books/<%= book.id %>/edit" class="btn btn-warning me-2">Tahrirlash</a>
+                                    <form class="d-inline" action="/books/<%= book.id %>?_method=DELETE" method="post">
+                                        <button class="btn btn-danger" type="submit">O'chirish</button>
+                                    </form>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">O'zbekiston bo'ylab yetkazib beramiz</h3>
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></button>
+                        </div>
+                        <form class="mt-3" method="post" action="/orders">
+                            <div class="mb-3">
+                                <input name="bookId" value="<%= book.id %>" hidden type="text" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mijoz ismi</label>
+                                <input name="client_name" type="text" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Telefon raqami</label>
+                                <input name="client_phone" value="998" type="number" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Miqdori</label>
+                                <input name="quantity" value="1" min="1" type="number" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Manzil</label>
+                                <input name="address" type="text" class="form-control" />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Jo'natish</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../layout/bottom') %>

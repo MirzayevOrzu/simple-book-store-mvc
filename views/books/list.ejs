@@ -1,0 +1,93 @@
+<%- include('../layout/top') %>
+
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <h1 class="card-title">Kitoblar</h1>
+                    <% if (adminId) { %>
+                        <a href="/books/create" class="btn btn-primary">Kitob qo'shish</a>
+                        <% } %>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <ul class="nav nav-pills d-flex align-items-center">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Turkumga ko'ra</a>
+                            <ul class="dropdown-menu">
+                                <% categories.forEach(c=> { %>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link <%= category === c.id ? 'active': '' %>" href="/?category=<%= c.id %><%= author !== 'all' ? `&author=${author}` : '' %>">
+                                            <%= c.name %>
+                                        </a>
+                                    </li>
+                                    <% }) %>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Muallifga ko'ra</a>
+                            <ul class="dropdown-menu">
+                                <% authors.forEach(a=> { %>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link" href="/?author=<%= a.id %><%= category !== 'all' ? `&category=${category}` : '' %>">
+                                            <%= a.name %>
+                                        </a>
+                                    </li>
+                                    <% }) %>
+                            </ul>
+                        </li>
+                        <% if (category !=='all' ) { %>
+                            <li class="nav-item me-3">
+                                <a href="/<%= author !== 'all' ? `?author=${author}`: '' %>" class="nav-link active badge rounded-pill bg-success d-flex align-items-center">
+                                    Turkum: <%= categories.find(c=> c.id === category).name %>
+                                        <button type="button" class="btn-close ms-2" aria-label="Close">
+                                        </button>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% if (author !=='all' ) { %>
+                                    <li class="nav-item">
+                                        <a href="/<%= category !== 'all' ? `?category=${category}`: '' %>" class="nav-link active badge rounded-pill bg-success d-flex align-items-center">
+                                            Muallif: <%= authors.find(a=> a.id === author).name %>
+                                                <button type="button" class="btn-close ms-2" aria-label="Close">
+                                                </button>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4 g-3">
+        <% books.forEach(book=> { %>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="/uploads/<%= book.image %>" class="card-img-top" alt="<%= book.title %>" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= book.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%= book.description %>
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><span class="me-1">Narxi:</span>
+                            <%= book.price %>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="me-1">Muqovasi:</span>
+                            <%= book.cover==='soft' ? 'Yumshoq' : 'Qattiq' %>
+                        </li>
+                    </ul>
+                    <div class="card-body d-flex">
+                        <a href="/product/<%= book.id %>" class="card-link mt-auto">Batafsil</a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+    <%- include('../layout/bottom') %>

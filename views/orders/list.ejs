@@ -1,0 +1,122 @@
+<%- include('../layout/top') %>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h1 class="card-title">Buyurtmalar</h1>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link <%= status === 'all' ? 'active' : '' %>" href="/orders/">Barchasi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= status === 'new' ? 'active' : '' %>" href="/orders?status=new">Yangi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= status === 'accepted' ? 'active' : '' %>" href="/orders?status=accepted">Qabul qilingan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= status === 'on_way' ? 'active' : '' %>" href="/orders?status=on_way">Yo'lda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= status === 'completed' ? 'active' : '' %>" href="/orders?status=completed">Yakunlangan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= status === 'cancelled' ? 'active' : '' %>" href="/orders?status=cancelled">Bekor qilingan</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Mijoz ismi</th>
+                                <th scope="col">Mijoz raqami</th>
+                                <th scope="col">Kitob</th>
+                                <th scope="col">Miqdor</th>
+                                <th scope="col">Manzil</th>
+                                <th scope="col">Narxi</th>
+                                <th scope="col">Holati</th>
+                                <th scope="col">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% orders.forEach((order, i)=> { %>
+                                <tr>
+                                    <th scope="row">
+                                        <%= i + 1 %>
+                                    </th>
+                                    <td>
+                                        <%= order.client_name %>
+                                    </td>
+                                    <td>
+                                        <%= order.client_phone %>
+                                    </td>
+                                    <td>
+                                        <a href="/product/<%= order.bookId %>">
+                                            <%= order.book.title %>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <%= order.quantity %>
+                                    </td>
+                                    <td>
+                                        <%= order.address %>
+                                    </td>
+                                    <td>
+                                        <%= order.totalPrice %>
+                                    </td>
+                                    <td>
+                                        <% if (order.status==='new' ) { %>
+                                            <span class="badge rounded-pill bg-warning text-dark">Yangi</span>
+                                            <% } else if (order.status==='accepted' ) { %>
+                                                <span class="badge rounded-pill bg-success">Qabul qilingan</span>
+                                                <% } else if (order.status==='on_way' ) { %>
+                                                    <span class="badge rounded-pill bg-info text-dark">Yo'lda</span>
+                                                    <% } else if (order.status==='completed' ) { %>
+                                                        <span class="badge rounded-pill bg-dark">Yakunlangan</span>
+                                                        <% } else if (order.status==='cancelled' ) { %>
+                                                            <span class="badge rounded-pill bg-secondary">Bekor qilingan</span>
+                                                            <% } %>
+                                    </td>
+                                    <td>
+                                        <form class="d-inline" action="/accept/<%= order.id %>" method="post">
+                                            <button class="btn btn-primary btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Qabul qilish">
+                                                <i class="bi bi-arrow-right-short"></i>
+                                            </button>
+                                        </form>
+                                        <form class="d-inline" action="/send/<%= order.id %>" method="post">
+                                            <button class="btn btn-info btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Jo'natish">
+                                                <i class="bi bi-send-fill"></i>
+                                            </button>
+                                        </form>
+                                        <form class="d-inline" action="/complete/<%= order.id %>" method="post">
+                                            <button class="btn btn-success btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Yakunlash">
+                                                <i class="bi bi-check"></i>
+                                            </button>
+                                        </form>
+                                        <form class="d-inline" action="/cancel/<%= order.id %>" method="post">
+                                            <button class="btn btn-danger btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Bekor qilish">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../layout/bottom') %>

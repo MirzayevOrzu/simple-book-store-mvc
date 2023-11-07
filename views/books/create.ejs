@@ -1,0 +1,62 @@
+<%- include('../layout/top') %>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Kitob qo'shish</h1>
+                    <form action="/books" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Nomi</label>
+                            <input name="title" type="text" class="form-control" id="title" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Tavsifi</label>
+                            <textarea name="description" id="description" cols="30" rows="5" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="copies" class="form-label">Miqdori</label>
+                            <input name="copies" type="number" class="form-control" id="copies" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="cover" class="form-label">Muqovasi</label>
+                            <select name="cover" id="cover" class="form-select" required>
+                                <option value="soft">Yumshoq</option>
+                                <option value="hard">Qattiq</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Narxi</label>
+                            <input name="price" type="number" class="form-control" id="price" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="authorId" class="form-label">Muallif</label>
+                            <select name="authorId" id="authorId" class="form-select" required>
+                                <% authors.forEach(author=> { %>
+                                    <option value="<%= author.id %>">
+                                        <%= author.name %>
+                                    </option>
+
+                                    <% }) %>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryId" class="form-label">Turkumi</label>
+                            <select name="categoryId" id="authorId" class="form-select" required>
+                                <% categories.forEach(category=> { %>
+                                    <option value="<%= category.id %>">
+                                        <%= category.name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Rasmi</label>
+                            <input type="file" name="image" class="form-control" id="image" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Qo'shish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../layout/bottom') %>
