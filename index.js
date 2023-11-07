@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
+const dotenv = require("dotenv");
 const bookRoutes = require("./routes/book-routes");
 const authorRoutes = require("./routes/author-routes");
 const adminRoutes = require("./routes/admin-routes");
@@ -11,6 +12,8 @@ const orderRoutes = require("./routes/order-routes");
 const categoryRoutes = require("./routes/category-routes");
 
 const app = express();
+
+dotenv.config();
 
 app.use(methodOverride("_method"));
 
@@ -58,6 +61,8 @@ app.use((req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log("Server 3000-portda ishlayapti.");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server ${PORT}-portda ishlayapti.`);
 });
